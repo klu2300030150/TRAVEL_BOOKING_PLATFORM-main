@@ -1,0 +1,2 @@
+nixpacks.plan.phases.build.cmds = ["cd TravelSathi && mvn clean package -DskipTests"]
+nixpacks.plan.phases.start.cmds = ["cd TravelSathi && java -Dserver.port=$PORT -jar target/*.jar"]
