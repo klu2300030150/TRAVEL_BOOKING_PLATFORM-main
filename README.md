@@ -4,6 +4,10 @@
 
 A full-stack travel booking application with Spring Boot backend and React frontend, deployed on Kubernetes (Minikube).
 
+🌐 **Live Demo**: [https://klu2300030150.github.io/TRAVEL_BOOKING_PLATFORM-main/](https://klu2300030150.github.io/TRAVEL_BOOKING_PLATFORM-main/)
+
+> **Note**: The live demo shows the frontend only. Backend APIs require separate deployment.
+
 ### Architecture
 - **Backend**: Spring Boot (Java 17) on port 9000
 - **Frontend**: React + Vite with Nginx on port 80

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelSathi - Redirecting...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .info {
+            margin-top: 2rem;
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 TravelSathi</h1>
+        <p>Travel Booking Platform</p>
+        <div class="spinner"></div>
+        <div class="info">
+            <p>Building and deploying the application...</p>
+            <p>GitHub Actions will automatically build and deploy the frontend.</p>
+            <p>Please wait a few minutes and refresh the page.</p>
+            <hr style="margin: 1.5rem 0; border: 1px solid rgba(255,255,255,0.3);">
+            <p><strong>Note:</strong> This application requires a backend server to function fully.</p>
+            <p>View the source code: <a href="https://github.com/klu2300030150/TRAVEL_BOOKING_PLATFORM-main" target="_blank">GitHub Repository</a></p>
+        </div>
+    </div>
+</body>
+</html>
