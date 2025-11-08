@@ -13,8 +13,10 @@ import HotelDetail from './pages/HotelDetail';
 import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
+  const basename = import.meta.env.MODE === 'production' ? '/TRAVEL_BOOKING_PLATFORM-main' : '/';
+  
   return (
-    <Router basename="/TRAVEL_BOOKING_PLATFORM-main">
+    <Router basename={basename}>
       <Header />
       <main className="main-content">
         <Routes>
