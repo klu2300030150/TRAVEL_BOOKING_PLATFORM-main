@@ -1,0 +1,18 @@
+# TravelSathi Backend Dockerfile - Optimized with dependency caching
+FROM maven:3.9.9-eclipse-temurin-17 AS build
+WORKDIR /app
+
+# Copy POM and download dependencies first (cached layer)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B || mvn dependency:resolve || true
+
+# Copy source and build
+COPY src ./src
+RUN mvn clean package -DskipTests -o || mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+ENV JAVA_OPTS=""
+EXPOSE 9000
+ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar app.jar"]

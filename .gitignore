@@ -1,0 +1,59 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+TravelSathi/target/
+TravelSathi/.mvn/
+TravelSathi/mvnw
+TravelSathi/mvnw.cmd
+
+# Node
+travelsathi-frontend/node_modules/
+travelsathi-frontend/dist/
+travelsathi-frontend/.vite/
+travelsathi-frontend/package-lock.json
+travelsathi-frontend/yarn.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Docker
+.dockerignore
+
+# Kubernetes secrets
+*-secret.yaml
+*.key
+*.crt
+
+# Build output
+build/
+out/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
