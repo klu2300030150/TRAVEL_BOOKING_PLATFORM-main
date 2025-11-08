@@ -20,24 +20,17 @@
    - Select: `TRAVEL_BOOKING_PLATFORM-main`
    - Railway will detect the Spring Boot app automatically
 
-3. **Add PostgreSQL Database**
+3. **Add MySQL Database**
    - In your Railway project, click **"+ New"**
-   - Select **"Database"** → **"Add PostgreSQL"**
-   - Railway will automatically provision a PostgreSQL database
-   - Database credentials are automatically injected as `DATABASE_URL`
+   - Select **"Database"** → **"Add MySQL"**
+   - Railway will automatically provision a MySQL database
+   - Database credentials are automatically injected as environment variables
 
 4. **Configure Environment Variables**
    - Click on your **backend service**
    - Go to **"Variables"** tab
-   - Add these variables:
-
-   ```
-   PORT=9000
-   DB_DIALECT=org.hibernate.dialect.PostgreSQLDialect
-   SHOW_SQL=false
-   ```
-
-   **Note**: `DATABASE_URL`, `PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD`, `PGDATABASE` are automatically set by Railway when you add PostgreSQL.
+   - Railway automatically sets: `DATABASE_URL`, `MYSQL_URL`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_DATABASE`
+   - **No additional variables needed!** Spring Boot will automatically use `DATABASE_URL`
 
 5. **Set Root Directory** (Important!)
    - In your service settings
@@ -96,22 +89,24 @@ I've already updated `application.properties` to allow requests from:
 
 ### Important Notes
 
-#### Database Migration: MySQL → PostgreSQL
+#### Database Migration: Using Railway MySQL
 
-Railway uses PostgreSQL instead of MySQL. I've already:
-- ✅ Added PostgreSQL driver to `pom.xml`
-- ✅ Configured application.properties to auto-detect database
-- ✅ Set environment variables for flexibility
+Railway provides MySQL database. I've configured your app to:
+- ✅ Use **MySQL** locally (with your credentials: root/Sreekar@8297)
+- ✅ Use **Railway MySQL** in production (automatic via `DATABASE_URL`)
 
-Your app will:
-- Use **MySQL** locally (with your credentials: root/Sreekar@8297)
-- Use **PostgreSQL** on Railway (automatic via `DATABASE_URL`)
+**Your Railway MySQL Connection**:
+```
+mysql://root:qGbmqUULhRWUqWpJXMJbOoFCgjqxaPcm@turntable.proxy.rlwy.net:57317/railway
+```
+
+Railway automatically injects this as `DATABASE_URL` environment variable.
 
 #### Database Tables
 
-Railway's PostgreSQL will:
+Railway's MySQL will:
 - Create tables automatically on first run (via `ddl-auto=update`)
-- No need to manually create the `travelvibe` database
+- Use database name: `railway` (automatically provided)
 - Hibernate will handle schema creation
 
 ### Troubleshooting
@@ -121,8 +116,8 @@ Railway's PostgreSQL will:
 - Verify Java 17 is being used
 
 **Database connection fails?**
-- Ensure PostgreSQL service is added to your project
-- Check that `DB_DIALECT` is set to PostgreSQL dialect
+- Ensure MySQL service is added to your project
+- Check that `DATABASE_URL` is set in environment variables
 
 **CORS errors?**
 - Verify your frontend domain is in the CORS allowed origins
@@ -142,8 +137,8 @@ Railway's PostgreSQL will:
 
 ### Files I've Updated for Railway
 
-✅ `TravelSathi/pom.xml` - Added PostgreSQL driver
-✅ `TravelSathi/src/main/resources/application.properties` - Environment variable configuration
+✅ `TravelSathi/pom.xml` - Already has MySQL driver
+✅ `TravelSathi/src/main/resources/application.properties` - Environment variable configuration for Railway MySQL
 ✅ This deployment guide
 
 ### Next Steps
