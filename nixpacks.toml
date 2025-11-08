@@ -1,0 +1,16 @@
+{
+  "phases": {
+    "setup": {
+      "nixPkgs": ["maven", "jdk17"]
+    },
+    "build": {
+      "cmds": [
+        "cd TravelSathi",
+        "mvn clean package -DskipTests"
+      ]
+    },
+    "start": {
+      "cmd": "cd TravelSathi && java -Dserver.port=$PORT -jar target/*.jar"
+    }
+  }
+}

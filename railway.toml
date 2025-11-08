@@ -1,2 +1,8 @@
-nixpacks.plan.phases.build.cmds = ["cd TravelSathi && mvn clean package -DskipTests"]
-nixpacks.plan.phases.start.cmds = ["cd TravelSathi && java -Dserver.port=$PORT -jar target/*.jar"]
+[build]
+builder = "nixpacks"
+buildCommand = "cd TravelSathi && mvn clean package -DskipTests"
+
+[deploy]
+startCommand = "cd TravelSathi && java -Dserver.port=$PORT -jar target/*.jar"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
