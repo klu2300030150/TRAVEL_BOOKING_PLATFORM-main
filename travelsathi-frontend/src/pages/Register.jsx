@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import '../style/auth.css';
 
 export default function Register() {
@@ -34,7 +34,7 @@ export default function Register() {
     }
 
     try {
-      const response = await axios.post('http://localhost:9000/api/user/register', {
+      const response = await api.user.register({
         name,
         email,
         phone,
@@ -42,14 +42,16 @@ export default function Register() {
         role,
       });
 
-      if (response.data.includes('success')) {
+      // Response is the direct data from backend (string message)
+      if (typeof response === 'string' && response.includes('success')) {
         alert('Registration successful!');
         navigate('/login');
       } else {
-        setErrorMessage(response.data);
+        setErrorMessage(response || 'Registration failed');
       }
     } catch (error) {
-      setErrorMessage('Failed to register. Please try again later.');
+      console.error('Registration error:', error);
+      setErrorMessage('Failed to register. Please check console for details.');
     }
   };
 
