@@ -4,7 +4,9 @@
 param(
     [string]$RailwayBackendUrl = "",
     [switch]$SkipBackend,
-    [switch]$SkipFrontend
+    [switch]$SkipFrontend,
+    [switch]$ProvisionRailway,
+    [string]$RailwayToken = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -35,6 +37,16 @@ Write-Host "✅ Prerequisites OK" -ForegroundColor Green
 if (-not $SkipBackend) {
     Write-Host "`n[2/8] Preparing backend for Railway..." -ForegroundColor Yellow
     
+    if ($ProvisionRailway -and [string]::IsNullOrWhiteSpace($RailwayToken)) {
+        Write-Host "`n⚠️  Provisioning requested but no Railway token provided." -ForegroundColor Yellow
+        Write-Host "Create a token at https://railway.app/account/tokens and pass -RailwayToken '...'." -ForegroundColor White
+    }
+
+    if ($ProvisionRailway) {
+        Write-Host "Running Railway provisioning helper..." -ForegroundColor Yellow
+        & "$PSScriptRoot\provision-railway.ps1" -RailwayToken $RailwayToken
+    }
+
     if ($RailwayBackendUrl -eq "") {
         Write-Host "`n⚠️  Backend URL not provided!" -ForegroundColor Yellow
         Write-Host "Please deploy your backend to Railway first:" -ForegroundColor White
@@ -53,6 +65,20 @@ if (-not $SkipBackend) {
     }
     
     Write-Host "✅ Using backend URL: $RailwayBackendUrl" -ForegroundColor Green
+
+    # Optionally set GitHub secret BACKEND_URL if gh CLI is available
+    $gh = Get-Command gh -ErrorAction SilentlyContinue
+    if ($gh) {
+        try {
+            Write-Host "Setting GitHub secret BACKEND_URL via gh CLI..." -ForegroundColor Yellow
+            echo $RailwayBackendUrl | gh secret set BACKEND_URL --repo "klu2300030150/TRAVEL_BOOKING_PLATFORM-main" | Out-Null
+            Write-Host "✅ GitHub secret BACKEND_URL updated" -ForegroundColor Green
+        } catch {
+            Write-Host "⚠️  Failed to set GitHub secret automatically. Set it manually in repo Settings > Secrets > Actions as BACKEND_URL=$RailwayBackendUrl" -ForegroundColor Yellow
+        }
+    } else {
+        Write-Host "ℹ️  gh CLI not found. Set GitHub secret BACKEND_URL manually to: $RailwayBackendUrl" -ForegroundColor Yellow
+    }
 } else {
     Write-Host "`n[2/8] Skipping backend deployment (use -SkipBackend flag)" -ForegroundColor Gray
 }

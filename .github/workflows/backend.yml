@@ -1,0 +1,74 @@
+name: Backend CI & Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'TravelSathi/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'TravelSathi/**'
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Maven Build
+        working-directory: TravelSathi
+        run: mvn -B -DskipTests package
+
+      - name: Run Tests
+        working-directory: TravelSathi
+        run: mvn test
+
+      - name: Archive JAR
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: travel-sathi-jar
+          path: TravelSathi/target/*.jar
+
+  deploy-railway:
+    if: github.ref == 'refs/heads/main'
+    needs: build-test
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: |
+          curl -fsSL https://railway.app/install.sh | sh
+          echo "$HOME/.railway/bin" >> $GITHUB_PATH
+
+      - name: Deploy to Railway (Source Sync)
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "RAILWAY_TOKEN secret missing. Skipping deploy." && exit 0;
+          fi
+          railway login --token "$RAILWAY_TOKEN"
+          railway up --service backend --detach || railway up --detach
+
+      - name: Output service URL
+        if: success()
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          railway login --token "$RAILWAY_TOKEN"
+          railway variables --json > vars.json
+          echo "Service URL variables:"; cat vars.json || true
