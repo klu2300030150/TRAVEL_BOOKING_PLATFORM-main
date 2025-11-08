@@ -42,16 +42,17 @@ export default function Register() {
         role,
       });
 
-      // Response is the direct data from backend (string message)
-      if (typeof response === 'string' && response.includes('success')) {
+      // Response may be plain text or JSON; success phrase detection
+      const respString = typeof response === 'string' ? response : JSON.stringify(response);
+      if (respString.toLowerCase().includes('success')) {
         alert('Registration successful!');
         navigate('/login');
       } else {
-        setErrorMessage(response || 'Registration failed');
+        setErrorMessage(respString || 'Registration failed');
       }
     } catch (error) {
       console.error('Registration error:', error);
-      setErrorMessage('Failed to register. Please check console for details.');
+      setErrorMessage(error.message || 'Failed to register. Please check console for details.');
     }
   };
 

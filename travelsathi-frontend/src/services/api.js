@@ -19,10 +19,21 @@ const api = {
 
     try {
       const response = await fetch(url, config);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+
+      const contentType = response.headers.get('content-type') || '';
+      let data;
+      if (contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        data = await response.text();
       }
-      return await response.json();
+
+      if (!response.ok) {
+        const message = typeof data === 'string' ? data : (data && data.message) || `HTTP ${response.status}`;
+        throw new Error(message);
+      }
+
+      return data;
     } catch (error) {
       console.error('API Error:', error);
       throw error;
