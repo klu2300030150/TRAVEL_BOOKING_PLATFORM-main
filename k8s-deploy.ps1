@@ -38,7 +38,7 @@ $manifestPath = "$PSScriptRoot/../Sample-Ansible-Playbook-template-master/k8s/tr
 if (-not (Test-Path $manifestPath)) { throw "Manifest not found: $manifestPath" }
 
 $raw = Get-Content $manifestPath -Raw
-$patched = $raw -replace 'travelsathi/backend:latest', "travelsathi/backend:$Tag" -replace 'travelsathi/frontend:latest', "travelsathi/frontend:$Tag" -replace 'VITE_API_BASE_URL: \"http://backend.travelsathi.svc.cluster.local:9000\"', "VITE_API_BASE_URL: \"$FrontendApiUrl\""
+$patched = $raw -replace 'travelsathi/backend:latest', "travelsathi/backend:$Tag" -replace 'travelsathi/frontend:latest', "travelsathi/frontend:$Tag" -replace 'VITE_API_BASE_URL: "http://backend.travelsathi.svc.cluster.local:9000"', "VITE_API_BASE_URL: `"$FrontendApiUrl`""
 $tmp = New-TemporaryFile
 Set-Content $tmp $patched
 kubectl apply -f $tmp | Out-Host

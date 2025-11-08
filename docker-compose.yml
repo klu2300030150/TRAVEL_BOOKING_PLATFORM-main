@@ -5,9 +5,8 @@ services:
     image: mysql:8.0
     container_name: travelsathi-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-changeme}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-Sreekar@8297}
       MYSQL_DATABASE: travelvibe
-      MYSQL_USER: ${MYSQL_USER:-root}
     ports:
       - "3306:3306"
     volumes:
@@ -28,8 +27,8 @@ services:
     environment:
       PORT: 9000
       DATABASE_URL: jdbc:mysql://db:3306/travelvibe
-      MYSQL_USER: ${MYSQL_USER:-root}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-changeme}
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-Sreekar@8297}
       SHOW_SQL: "true"
     ports:
       - "9000:9000"
