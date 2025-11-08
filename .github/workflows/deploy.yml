@@ -45,7 +45,7 @@ jobs:
       - name: Show dist contents (debug)
         run: |
           echo "Listing dist/ after build"
-          ls -la ./dist || true
+          ls -la travelsathi-frontend/dist || true
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

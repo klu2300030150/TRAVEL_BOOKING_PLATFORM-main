@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: process.env.NODE_ENV === 'production' ? '/TRAVEL_BOOKING_PLATFORM-main/' : '/',
   build: {
-    outDir: '../dist',
+    outDir: 'dist',
     emptyOutDir: true,
   }
 })
