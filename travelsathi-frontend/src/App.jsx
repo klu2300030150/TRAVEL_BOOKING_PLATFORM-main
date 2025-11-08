@@ -14,7 +14,7 @@ import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/TRAVEL_BOOKING_PLATFORM-main">
       <Header />
       <main className="main-content">
         <Routes>
