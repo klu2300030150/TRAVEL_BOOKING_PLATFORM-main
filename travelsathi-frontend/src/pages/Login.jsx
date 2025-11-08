@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../style/auth.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:9000';
+
 export default function Login() {
   const [showRoleSelection, setShowRoleSelection] = useState(true);
   const [selectedRole, setSelectedRole] = useState('');
@@ -32,7 +34,7 @@ export default function Login() {
     }
 
     try {
-      const response = await axios.post('http://localhost:9000/api/user/login', {
+      const response = await axios.post(`${API_BASE_URL}/api/user/login`, {
         email,
         password,
         role: selectedRole,
