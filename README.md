@@ -8,6 +8,25 @@ A full-stack travel booking application with Spring Boot backend and React front
 
 > **Note**: The live demo shows the frontend only. Backend APIs require separate deployment.
 
+## 🚀 Automated Deployment (1 Command!)
+
+```powershell
+# Step 1: Deploy backend to Railway (via browser, 5 minutes)
+.\deploy-complete.ps1
+
+# Step 2: Once Railway gives you a URL, run:
+.\deploy-complete.ps1 -RailwayBackendUrl "https://your-railway-url.up.railway.app"
+```
+
+**That's it!** This single command:
+- ✅ Configures frontend with backend URL
+- ✅ Builds production frontend
+- ✅ Commits and pushes to GitHub
+- ✅ Triggers automatic deployment
+- ✅ Opens your live site
+
+📖 **[Complete Deployment Guide](./DEPLOY_GUIDE.md)** - Step-by-step with screenshots
+
 ### Architecture
 - **Backend**: Spring Boot (Java 17) on port 9000
 - **Frontend**: React + Vite with Nginx on port 80
